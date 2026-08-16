@@ -43,6 +43,7 @@ jobs:
 
       # 4. Terraform Init
       - name: Terraform Init
+        working-directory: "Parent module"
         run: terraform init
 
       # 5. Terraform Format Check
@@ -51,8 +52,10 @@ jobs:
 
       # 6. Terraform Validate
       - name: Terraform Validate
+        working-directory: "Parent module"
         run: terraform validate
 
       # 7. Terraform Plan
       - name: Terraform Plan
+        working-directory: "Parent module"
         run: terraform plan
