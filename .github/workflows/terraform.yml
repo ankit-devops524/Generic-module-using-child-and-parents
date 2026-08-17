@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Azure Login using Service Principal
+      # 2. Azure Login
       - name: Azure Login
         uses: azure/login@v2
         with:
@@ -28,16 +28,16 @@ jobs:
               "tenantId": "${{ secrets.AZURE_TENANT_ID }}"
             }
 
-      # 3. Setup Terraform
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v4
+      # 3. Check Terraform
+      - name: Terraform Version
+        run: terraform version
 
       # 4. Terraform Init
       - name: Terraform Init
         working-directory: "Parent module"
         run: terraform init -input=false
 
-      # 5. Terraform Format Check
+      # 5. Terraform Format
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
