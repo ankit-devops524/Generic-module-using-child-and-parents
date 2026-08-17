@@ -50,3 +50,7 @@ jobs:
       - name: Terraform Plan
         working-directory: "Parent module"
         run: terraform plan -var-file="terraform.tfvars"
+      # 8. Terraform apply
+      - name: Terraform apply
+        working-directory: "Parent module"
+        run: terraform apply -auto-approve
