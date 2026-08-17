@@ -12,7 +12,7 @@ jobs:
 
     steps:
 
-      # 1. Checkout source code
+      # 1. Checkout
       - name: Checkout Code
         uses: actions/checkout@v4
 
@@ -28,30 +28,38 @@ jobs:
               "tenantId": "${{ secrets.AZURE_TENANT_ID }}"
             }
 
-      # 3. Check Terraform
+      # 3. Install Terraform
+      - name: Install Terraform
+        run: |
+          TERRAFORM_VERSION="1.14.6"
+          wget -q "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+          unzip -o "terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+          sudo mv terraform /usr/local/bin/terraform
+
+      # 4. Verify Terraform
       - name: Terraform Version
         run: terraform version
 
-      # 4. Terraform Init
+      # 5. Terraform Init
       - name: Terraform Init
         working-directory: "Parent module"
         run: terraform init -input=false
 
-      # 5. Terraform Format
+      # 6. Terraform Format
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
-      # 6. Terraform Validate
+      # 7. Terraform Validate
       - name: Terraform Validate
         working-directory: "Parent module"
         run: terraform validate
 
-      # 7. Terraform Plan
+      # 8. Terraform Plan
       - name: Terraform Plan
         working-directory: "Parent module"
         run: terraform plan -input=false -var-file="terraform.tfvars"
 
-      # 8. Terraform Apply
+      # 9. Terraform Apply
       - name: Terraform Apply
         working-directory: "Parent module"
         run: terraform apply -input=false -auto-approve -var-file="terraform.tfvars"
