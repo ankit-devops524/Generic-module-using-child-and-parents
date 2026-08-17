@@ -58,4 +58,4 @@ jobs:
       # 7. Terraform Plan
       - name: Terraform Plan
         working-directory: "Parent module"
-        run: terraform plan
+        run: terraform plan -var-file="terraform.tfvars"
