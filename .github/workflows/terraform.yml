@@ -28,9 +28,10 @@ jobs:
               "tenantId": "${{ secrets.AZURE_TENANT_ID }}"
             }
 
-      # 3. Setup Terraform
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v5
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "1.14.6"
 
       # 4. Terraform Init
       - name: Terraform Init
